@@ -1,0 +1,20 @@
+# 1. The name of our robot's task
+name: My First Automation Robot
+
+# 2. The Trigger: Wake up whenever code is pushed to any branch
+on: [push]
+
+# 3. The Work: What the robot actually does
+jobs:
+  run-robot-tasks:
+    # Use a fresh, clean Ubuntu computer in GitHub's cloud
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Step A: Print a simple greeting in the logs
+      - name: Say Hello
+        run: echo "Hello! Your GitHub Actions robot is awake and working."
+
+      # Step B: Ask the robot to print out the Git branch name
+      - name: Show branch details
+        run: echo "You just pushed code to the branch called ${{ github.ref_name }}"
