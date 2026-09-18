@@ -21,11 +21,11 @@ jobs:
         # 🎯 FIX 1: env must be formatted as key: value pairs under a step, not a lone text string.
         # 🎯 FIX 2: Space before colon removed (env:), indented correctly with 8 spaces.
         env:
-          My_Pass: ${{ secrets.MY_USE_PASS }}
+          My_Pass: ${{ secrets.My_Use_Pass }}
         # This will print the exact plain text stored in your variable
-        run: echo "The Salesforce User is ${{ vars.MY_USER }}"
+        run: echo "The Salesforce User is ${{ vars.My_User }}"
 
       # Step C: Print the GitHub Secret (Secured)
       - name: Print the GitHub Secret (Secured)
         # This will run, but GitHub will display '***' in the logs to protect it!
-        run: echo "The Salesforce Secret Key is ${{ secrets.MY_USE_PASS }}"
+        run: echo "The Salesforce Secret Key is ${{ secrets.My_Use_Pass }}"
