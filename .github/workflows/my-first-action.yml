@@ -1,9 +1,10 @@
 # 1. The name of our robot's task
 name: My First Automation Robot
 
-# 2. The Trigger: Wake up whenever code is pushed to any branch
+# 2. The Trigger: A manual button on the GitHub website
 on: 
   workflow_dispatch:
+
 # 3. The Work: What the robot actually does
 jobs:
   run-robot-tasks:
@@ -15,12 +16,16 @@ jobs:
       - name: Say Hello
         run: echo "Hello! Your GitHub Actions robot is awake and working."
 
-      # Step B: Ask the robot to print out the Git branch name
-        env : My_Pass
+      # Step B: Print the GitHub Variable
       - name: Print the GitHub Variable
+        # 🎯 FIX 1: env must be formatted as key: value pairs under a step, not a lone text string.
+        # 🎯 FIX 2: Space before colon removed (env:), indented correctly with 8 spaces.
+        env:
+          My_Pass: ${{ secrets.MY_USE_PASS }}
         # This will print the exact plain text stored in your variable
         run: echo "The Salesforce User is ${{ vars.MY_USER }}"
 
+      # Step C: Print the GitHub Secret (Secured)
       - name: Print the GitHub Secret (Secured)
         # This will run, but GitHub will display '***' in the logs to protect it!
         run: echo "The Salesforce Secret Key is ${{ secrets.MY_USE_PASS }}"
