@@ -2,7 +2,8 @@
 name: My First Automation Robot
 
 # 2. The Trigger: Wake up whenever code is pushed to any branch
-on: workflow_dispatch:
+on: 
+  workflow_dispatch:
 # 3. The Work: What the robot actually does
 jobs:
   run-robot-tasks:
@@ -15,7 +16,7 @@ jobs:
         run: echo "Hello! Your GitHub Actions robot is awake and working."
 
       # Step B: Ask the robot to print out the Git branch name
-        environment: My_Pass
+        env : My_Pass
       - name: Print the GitHub Variable
         # This will print the exact plain text stored in your variable
         run: echo "The Salesforce User is ${{ vars.MY_USER }}"
