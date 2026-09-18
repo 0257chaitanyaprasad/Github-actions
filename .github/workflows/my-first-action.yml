@@ -11,6 +11,9 @@ jobs:
     # Use a fresh, clean Ubuntu computer in GitHub's cloud
     runs-on: ubuntu-latest
     
+    # 🎯 THE FIX: This unlocks the secrets and variables stored inside your "My_Pass" environment!
+    environment: My_Pass
+    
     steps:
       # Step A: Print a simple greeting in the logs
       - name: Say Hello
@@ -18,14 +21,12 @@ jobs:
 
       # Step B: Print the GitHub Variable
       - name: Print the GitHub Variable
-        # 🎯 FIX 1: env must be formatted as key: value pairs under a step, not a lone text string.
-        # 🎯 FIX 2: Space before colon removed (env:), indented correctly with 8 spaces.
         env:
-          My_Pass: ${{ secrets.MY_PASS_USER }}
-        # This will print the exact plain text stored in your variable
+          My_Pass_Env: ${{ secrets.MY_PASS_USER }}
+        # This will now successfully print "ABCDEF" from your environment variables!
         run: echo "The Salesforce User is ${{ vars.USER_ME }}"
 
       # Step C: Print the GitHub Secret (Secured)
       - name: Print the GitHub Secret (Secured)
-        # This will run, but GitHub will display '***' in the logs to protect it!
+        # This will now run successfully, and GitHub will display '***' instead of blank text!
         run: echo "The Salesforce Secret Key is ${{ secrets.MY_PASS_USER }}"
