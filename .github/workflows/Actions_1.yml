@@ -1,0 +1,49 @@
+# 1. THE TITLE: A clean name for the GitHub website dashboard
+name: Production Master Pipeline
+
+# 2. THE TRIGGERS & FILTERS: Run manually, but ONLY if we are on the main branch
+on:
+  workflow_dispatch:
+    branches:
+      - main
+
+# 3. THE WORK ASSIGNMENTS
+jobs:
+  execute-pipeline:
+    runs-on: ubuntu-latest
+    
+    # 🔐 ENVIRONMENT FILTER: Unlock the secure "My_Pass" vault room on GitHub
+    environment: My_Pass
+
+    steps:
+      # Step A: Download our repository files onto the blank virtual machine
+      - name: 🛠️ Clone Repository Code
+        uses: actions/checkout@v4
+
+      # Step B: Set up standard and dynamic environment variables
+      - name: ⚙️ Configure Runtime Environment
+        env:
+          # Create a local step nickname for our secret password
+          LOCAL_SECRET_KEY: ${{ secrets.MY_PASS_USER }}
+        run: |
+          echo "Unlocking Salesforce systems for User: ${{ vars.USER_ME }}"
+          
+          # Calculate a dynamic variable on the fly and save it to the magic file
+          PIPELINE_RUN_ID="RUN-${{ github.run_number }}"
+          echo "CURRENT_RUN_ID=$PIPELINE_RUN_ID" >> $GITHUB_ENV
+
+      # Step C: Use our variables to generate a physical file (Artifact)
+      - name: 📊 Generate Project Deliverable File
+        run: |
+          echo "======================================" > deployment-log.txt
+          echo "Pipeline ID: $CURRENT_RUN_ID" >> deployment-log.txt
+          echo "Deployed successfully by: ${{ vars.USER_ME }}" >> deployment-log.txt
+          echo "======================================" >> deployment-log.txt
+          echo "Created a brand new physical text file on the hard drive!"
+
+      # Step D: Save our file to GitHub's cloud before the machine gets deleted
+      - name: 📦 Archive Deployment Logs
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-production-logs
+          path: deployment-log.txt
